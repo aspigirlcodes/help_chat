@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Emergency Chat</title>
+		<style>
+      body {
+        background-color: #1e1f21;
+        color: white;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction:column;
+        min-height: 100vh;
+        width: auto;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;        
+      }
+      @media only screen and (min-width: 576px){
+        .container {
+          max-width: 540px;
+          width: auto;
+        }
+      }
+      
+      @media only screen and (min-width: 768px){
+        .container {
+          max-width: 720px;
+        }
+      }
+      
+      @media only screen and (min-width: 992px){
+        .container {
+          max-width: 960px;
+        }
+      }
+      
+      @media only screen and (min-width: 1200px){
+        .container {
+          max-width: 1140px;
+        }
+      }
+      
+      .display-message {
+        white-space: pre-wrap;
+        background-color: #b8ecfc;
+        color: black;
+        margin: 0.5em 0;
+        padding: 0.5em;
+        width: 70%;
+      }
+      .right {
+        margin-left: auto;
+      }
+      
+      .checkbox-label {
+        margin: 0;
+      }
+      
+      .range {
+        width: 30%;
+      }
+      
+      .range-input {
+        width: 100%
+      }
+      
+      .setting {
+        margin-bottom: 0.5rem;
+      }
+      
+      #display {
+        flex: 8 0 auto;
+      }
+      
+      #settings {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+      
+      #input {
+        flex: 1 1 auto;
+        display: flex;
+      }
+      textarea {
+        width: 70%;
+        height: 100%;
+        background-color: black;
+        color: white;
+        border: 2px solid #333333;
+        box-sizing: border-box;
+        
+      }
+      
+      .button {
+        height: 100%;
+        width: 30%;
+        background-color: #2196F3; 
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.5rem;
+        border-radius: 2px;
+      }
+      
+      /* Switch from https://www.w3schools.com/howto/howto_css_switch.asp */
+      /* The switch - the box around the slider */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        flex: 0 0 auto;
+        margin: 0.5rem;
+      }
+
+      /* Hide default HTML checkbox */
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* The slider */
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "L";
+        text-align: center;
+        color: black;
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+        content: "R";
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+      /* range  from https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
+      input[type=range] {
+        -webkit-appearance: none;
+        margin: 2px 0;
+        width: 100%;
+        background: transparent;
+      }
+      input[type=range]:focus {
+        outline: none;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        background: #cccccc;
+        border-radius: 3px;
+        border: 0.2px solid #010101;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        border: 1px solid #2196F3;
+        height: 13px;
+        width: 13px;
+        border-radius: 8px;
+        background: #2196F3;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -14px;
+      }
+      input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #367ebd;
+      }
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        background: #cccccc;
+        border-radius: 3px;
+        border: 0.2px solid #010101;
+      }
+      input[type=range]::-moz-range-thumb {
+        border: 1px solid #2196F3;
+        height: 13px;
+        width: 13px;
+        border-radius: 8px;
+        background: #2196F3;
+        cursor: pointer;
+      }
+      input[type=range]::-ms-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        animate: 0.2s;
+        background: transparent;
+        border-color: transparent;
+        border-width: 13px 0;
+        color: transparent;
+      }
+      input[type=range]::-ms-fill-lower {
+        background: #2a6495;
+        border: 0.2px solid #010101;
+        border-radius: 3px;
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      }
+      input[type=range]::-ms-fill-upper {
+        background: #cccccc;
+        border: 0.2px solid #010101;
+        border-radius: 3px;
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      }
+      input[type=range]::-ms-thumb {
+        border: 1px solid #2196F3;
+        height: 13px;
+        width: 13px;
+        border-radius: 8px;
+        background: #2196F3;
+        cursor: pointer;
+      }
+      input[type=range]:focus::-ms-fill-lower {
+        background: #cccccc;
+      }
+      input[type=range]:focus::-ms-fill-upper {
+        background: #367ebd;
+      }
+    </style>
+	</head>
+	<body>
+    
+    <div class="container">
+      <div id="display">
+      </div>
+      <div id="settings">
+        <div class="checkbox setting">
+          <input type="checkbox" class="checkbox-input" id="auto-switch" onchange="auto_switch_user(this.checked)">
+          <label class="checkbox-label" for="auto-switch">Auto-switch User</label>
+        </div>
+        <label class="switch">
+          <input id="user-switch" type="checkbox" onchange="user_changed(this.checked)">
+          <span class="slider"></span>
+        </label>
+        <div class="range setting">
+          <label for="text-size">Text size</label>
+          <input type="range" class="range-input" min="0" max="4" value="1" id="text-size" oninput="change_size(this.value)">
+        </div>
+      </div>
+      <div id="input">
+        <textarea name="message" id="message-input" autofocus="true"></textarea>
+        
+        <button type="submit" name="button" class="button" onclick="send()">Send</button>
+      
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var align_right = false;
+    
+    function change_size(value){
+      if (value == 0) {
+        value = 0.5
+      }
+      var messages = document.getElementsByClassName("display-message")
+      for (var message of messages){
+        message.style['font-size'] = value + "rem"
+      }
+      document.getElementById('message-input').scrollIntoView(false)
+    }
+    
+    // change from dom to variable
+    function user_changed(checked){
+      align_right = checked
+    }
+    
+    // change of variable and dom
+    function switch_user(right){
+      align_right = right
+      document.getElementById('user-switch').checked = align_right
+    } 
+    
+    function auto_switch_user(checked){
+      if (checked) {
+        var messages = document.getElementsByClassName("display-message")
+        if (messages){
+          var last_message = messages[messages.length - 1]
+          console.log(last_message.className.indexOf("right")===-1)
+          var last_left = last_message.className.indexOf("right") === -1
+          switch_user(last_left)
+        }
+      }      
+    }
+      
+    function send(){
+      var display = document.getElementById('display');
+      var textarea = document.getElementById('message-input')
+      var message_text = textarea.value
+      var message_div = document.createElement('div')
+      message_div.appendChild(document.createTextNode(message_text))
+      var auto_switch = document.getElementById('auto-switch').checked
+      
+      
+      if(align_right){
+        message_div.setAttribute('class', "display-message right")
+        
+      }else{
+        message_div.setAttribute('class', "display-message")
+        
+      }
+      if (auto_switch) {
+        switch_user(!align_right)
+      }
+      display.appendChild(message_div)
+      var size = document.getElementById('text-size').value
+      change_size(size)
+      textarea.value = ""
+      textarea.focus()
+    }  
+    </script>
+  </body>
