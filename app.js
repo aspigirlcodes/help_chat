@@ -1,5 +1,16 @@
 var align_right = false;
 
+
+if ("serviceWorker" in navigator){
+  navigator.serviceWorker.register("serviceworker.js")
+    .then(function(registration){
+      console.log("Service Worker registered with schope:", registration.scope)
+    }).catch(function(err){
+      console.log("Service Worker registration failed:", err)
+    })
+}
+
+
 function change_size(value){
   if (value == 0) {
     value = 0.5
