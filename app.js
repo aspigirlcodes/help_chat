@@ -1,5 +1,6 @@
-var align_right = false;
+var align_right = document.getElementById('user-switch').checked
 
+document.getElementById('message-input').focus()
 
 if ("serviceWorker" in navigator){
   navigator.serviceWorker.register("serviceworker.js")
@@ -9,7 +10,6 @@ if ("serviceWorker" in navigator){
       console.log("Service Worker registration failed:", err)
     })
 }
-
 
 function change_size(value){
   if (value == 0) {
@@ -25,6 +25,7 @@ function change_size(value){
 // change from dom to variable
 function user_changed(checked){
   align_right = checked
+  document.getElementById('message-input').focus()
 }
 
 // change of variable and dom
@@ -38,19 +39,22 @@ function auto_switch_user(checked){
     var messages = document.getElementsByClassName("display-message")
     if (messages){
       var last_message = messages[messages.length - 1]
-      console.log(last_message.className.indexOf("right")===-1)
       var last_left = last_message.className.indexOf("right") === -1
       switch_user(last_left)
     }
-  }      
+  } else {
+    switch_user(!align_right)
+  }   
+  document.getElementById('message-input').focus()  
 }
   
 function send(){
   var display = document.getElementById('display');
   var textarea = document.getElementById('message-input')
-  var message_text = textarea.value
+  var message_text = textarea.innerText
   var message_div = document.createElement('div')
   message_div.appendChild(document.createTextNode(message_text))
+  textarea.innerHTML = ""
   var auto_switch = document.getElementById('auto-switch').checked
   
   
