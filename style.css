@@ -55,6 +55,12 @@ body {
   margin: 0.5em 0;
   padding: 0.5em;
   width: 70%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 .right {
   margin-left: auto;
