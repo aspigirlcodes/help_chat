@@ -1,6 +1,13 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
 html{
   height: 100%;
 }
+
 body {
   background-color: #1e1f21;
   color: white;
@@ -9,9 +16,126 @@ body {
   font-weight: 400;
   line-height: 1.5;
   text-align: left;
-  margin: 0;
-  height: 100%
+  height: 100%;
 }
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+button,
+input[type="button"] {
+	border: none;
+	border-radius: 0;
+	background: #000;
+	color: #fff;
+  cursor: pointer;
+	display: inline-block;
+	padding: 1em 1.5em;
+	transition: all 0.25s ease-in-out;
+}
+
+/*
+NAVIGATION
+*/
+.navbar-nav {
+  list-style-type: none;
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: all .25s ease-in-out;
+}
+
+.navbar-nav.active {
+  visibility: visible;
+  background-color: #333333;
+  opacity: 1;
+}
+
+.navbar-nav li {
+    text-align: center;
+    margin: 0px auto;
+    padding: 15px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Hamburger menu from https://codepen.io/samikeijonen/pen/jqvxdL */
+.menu-toggle {
+  font-size: 0.875em;
+	padding: 1em;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer; 
+  color: rgba(255,255,255,0.8);  
+  background-color: #333333;
+  z-index: 100;
+}
+
+.menu-toggle:focus {
+	outline: thin dotted;
+  outline-offset: -2px;
+}
+
+.icon {
+	display: inline-block;
+	fill: currentColor;
+	height: 1em;
+	width: 1em;
+	vertical-align: middle;
+	position: relative; /* Align more nicely with capital letters */
+	top: -0.0625em;
+}
+
+/* Menu toggle styles. */
+
+.icon-menu-toggle {
+	width: 2em;
+	height: 2em;
+  top: 0;
+}
+
+/* Animate menu icon (lines). */
+.svg-menu-toggle .line {
+  opacity: 1;
+  transform: rotate(0) translateY(0) translateX(0);
+  transform-origin: 1em 1em;
+  transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+}
+.svg-menu-toggle .line-1 {
+  transform-origin: 1em 2.5em;
+}
+.svg-menu-toggle .line-3 {
+  transform-origin: 1em 4.5em;
+}
+
+.menu-toggle.opened .svg-menu-toggle .line-1 {
+  transform: rotate(45deg) translateY(0) translateX(0);
+}
+.menu-toggle.opened .svg-menu-toggle .line-2 {
+  opacity: 0;
+}
+.menu-toggle.opened .svg-menu-toggle .line-3 {
+  transform: rotate(-45deg) translateY(0em) translateX(0em);
+}
+
+/*
+PAGE STRUCTURE
+*/
+
 .container {
   display: flex;
   flex-direction:column;
@@ -48,40 +172,6 @@ body {
   }
 }
 
-.display-message {
-  white-space: pre-wrap;
-  background-color: #b8ecfc;
-  color: black;
-  margin: 0.5em 0;
-  padding: 0.5em;
-  width: 70%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
-}
-.right {
-  margin-left: auto;
-}
-
-.checkbox-label {
-  margin: 0;
-}
-
-.range {
-  width: 30%;
-}
-
-.range-input {
-  width: 100%
-}
-
-.setting {
-  margin-bottom: 0.5rem;
-}
-
 #display {
   flex: 8 0 auto;
 }
@@ -98,27 +188,46 @@ body {
   display: flex;
   align-items: stretch;
 }
-#message-input {
+
+/*
+DISPLAY SECTION
+*/
+.display-message {
+  white-space: pre-wrap;
+  background-color: #b8ecfc;
+  color: black;
+  margin: 0.5em 0;
+  padding: 0.5em;
   width: 70%;
-  min-height: 5rem;
-  background-color: black;
-  color: white;
-  border: 2px solid #333333;
-  box-sizing: border-box;
-  
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
-.button {
-  
+.right {
+  margin-left: auto;
+}
+
+/*
+SETTINGS SECTION
+*/
+.checkbox-label {
+  margin: 0;
+}
+
+.range {
   width: 30%;
-  background-color: #2196F3; 
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.5rem;
-  border-radius: 2px;
+}
+
+.range-input {
+  width: 100%
+}
+
+.setting {
+  margin-bottom: 0.5rem;
 }
 
 /* Switch from https://www.w3schools.com/howto/howto_css_switch.asp */
@@ -266,4 +375,31 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
+}
+
+/*
+INPUT SECTION
+*/
+
+#message-input {
+  width: 70%;
+  min-height: 5rem;
+  background-color: black;
+  color: white;
+  border: 2px solid #333333;
+  box-sizing: border-box;
+  
+}
+
+.button {
+  
+  width: 30%;
+  background-color: #2196F3; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.5rem;
+  border-radius: 2px;
 }

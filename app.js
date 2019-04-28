@@ -11,6 +11,27 @@ if ("serviceWorker" in navigator){
     })
 }
 
+
+// Set button to click.
+var menu_button = document.getElementById( 'menu-toggle' )
+
+// Click the button.
+menu_button.onclick = function() {
+	
+  // Toggle class "opened". Set also aria-expanded to true or false.
+  if ( -1 !== menu_button.className.indexOf( 'opened' ) ) {
+    menu_button.className = menu_button.className.replace( ' opened', '' )
+    menu_button.setAttribute( 'aria-expanded', 'false' )
+  } else {
+    menu_button.className += ' opened'
+    menu_button.setAttribute( 'aria-expanded', 'true' )
+   }
+   document.getElementById('nav-menu').classList.toggle('active');
+    
+ }
+
+
+
 function change_size(value){
   if (value == 0) {
     value = 0.5

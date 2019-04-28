@@ -7,7 +7,29 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-    
+    <nav class="navbar">
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false"><span class="visuallyhidden">Menu</span>
+					<svg class="icon icon-menu-toggle" aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100">
+						<g class="svg-menu-toggle">
+							<path class="line line-1" d="M5 13h90v14H5z"/>
+							<path class="line line-2" d="M5 43h90v14H5z"/>
+							<path class="line line-3" d="M5 73h90v14H5z"/>
+						</g>
+					</svg>
+			</button>
+      <h2 class="visuallyhidden">Main Menu</h2>
+    	<ul class="navbar-nav" id="nav-menu">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Intro Texts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Default Settings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Save Chat</a>
+        </li>
+      </ul>
+    </nav>
     <div class="container">
       <div id="display">
       </div>
