@@ -1,4 +1,4 @@
-var CACHE_NAME = "help_chat_cache"
+var CACHE_NAME = "help_chat_cache_v2"
 var immutableRequests = [
   
 ]
