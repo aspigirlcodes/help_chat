@@ -16,8 +16,9 @@ if ("serviceWorker" in navigator){
 var menu_button = document.getElementById( 'menu-toggle' )
 
 // Click the button.
-menu_button.onclick = function() {
-	
+menu_button.onclick = toggle_menu
+
+function toggle_menu() {
   // Toggle class "opened". Set also aria-expanded to true or false.
   if ( -1 !== menu_button.className.indexOf( 'opened' ) ) {
     menu_button.className = menu_button.className.replace( ' opened', '' )
@@ -25,10 +26,52 @@ menu_button.onclick = function() {
   } else {
     menu_button.className += ' opened'
     menu_button.setAttribute( 'aria-expanded', 'true' )
-   }
-   document.getElementById('nav-menu').classList.toggle('active');
+  }
+  document.getElementById('nav-menu').classList.toggle('active');
     
- }
+}
+ 
+function share_chat(){
+  toggle_menu()
+  var currentDate = new Date()
+
+  var date = currentDate.getDate()
+  var month = currentDate.getMonth() //Be careful! January is 0 not 1
+  var year = currentDate.getFullYear()
+
+  var dateString = date + "-" +(month + 1) + "-" + year
+  
+  var messages = document.getElementsByClassName("display-message")
+  var text = ""
+  for (var message of messages){
+    if (message.className.indexOf("right") === -1){
+      text += "- " + message.innerText + "\n"
+    } else {
+      text += "* " + message.innerText + "\n"
+    }
+  }
+  if (navigator.share) {
+    navigator.share({
+      title: 'Help Chat from ' + dateString,
+      text: text,
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error))
+  } else {
+    console.log(text)
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', "Helpchat_" + dateString + ".txt");
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+  
+}
 
 
 
