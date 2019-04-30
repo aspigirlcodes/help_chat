@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Emergency Chat</title>
 		<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="aria.modal.css">
 	</head>
 	<body>
     <nav class="navbar">
@@ -20,7 +21,7 @@
       <h2 class="visuallyhidden">Main Menu</h2>
     	<ul class="navbar-nav" id="nav-menu">
         <li class="nav-item">
-          <a class="nav-link" href="#">Intro Texts</a>
+          <button type="button" data-modal-open="modal_1" onclick="toggle_menu()" class="open-dialog nav-link"> Intro Texts </button>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Default Settings</a>
@@ -50,10 +51,44 @@
       <div id="input">
         <div contenteditable="true" id="message-input"></div>
         
-        <button type="submit" name="button" class="button" onclick="send()">Send</button>
+        <button type="submit" name="button" class="button-send" onclick="send()">Send</button>
       
       </div>
     </div>
     
+    <div id="modal_1" data-modal>
+      <div data-modal-document>
+        <h1>
+          Intro Texts
+        </h1>
+        <div>
+          <p>
+            No Intro texts yet
+          </p>
+          <button type="button" data-modal-open="modal_2" class="button-new">New Intro Text</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="modal_2" data-modal>
+      <div data-modal-document>
+        <h1>
+          New Intro Text
+        </h1>
+        <div>
+          <div>
+            <label for="inputTitle">Title</label>
+            <input type="text" id="inputTitle">
+          </div>
+          <div>
+            <label for="inputText">Text</label>
+            <textarea id="inputText" rows="8"></textarea>
+          </div>
+          <button type="button" class="button-new">Save</button>
+        </div>
+      </div>
+    </div>
+    
     <script src="app.js"></script>
+    <script src="aria.modal.min.js"></script>
   </body>
