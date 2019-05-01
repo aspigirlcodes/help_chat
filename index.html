@@ -21,7 +21,7 @@
       <h2 class="visuallyhidden">Main Menu</h2>
     	<ul class="navbar-nav" id="nav-menu">
         <li class="nav-item">
-          <button type="button" data-modal-open="modal_1" onclick="toggle_menu()" class="open-dialog nav-link"> Intro Texts </button>
+          <button type="button" data-modal-open="modal_1" onclick="texts_modal()" class="open-dialog nav-link"> Intro Texts </button>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Default Settings</a>
@@ -61,21 +61,16 @@
         <h1>
           Intro Texts
         </h1>
-        <div>
-          <p>
-            No Intro texts yet
-          </p>
-          <button type="button" data-modal-open="modal_2" class="button-new">New Intro Text</button>
+        <hr/>
+        <div id="modal_1_content">
+          <div id="text_list">
+          </div>
+          <button type="button" onclick="edit_text_modal()" class="button-new right">New Intro Text</button>
         </div>
-      </div>
-    </div>
-    
-    <div id="modal_2" data-modal>
-      <div data-modal-document>
-        <h1>
-          New Intro Text
-        </h1>
-        <div>
+        <div id="modal_2_content">
+          
+          <input type="hidden" id="inputId">
+          
           <div>
             <label for="inputTitle">Title</label>
             <input type="text" id="inputTitle">
@@ -84,11 +79,12 @@
             <label for="inputText">Text</label>
             <textarea id="inputText" rows="8"></textarea>
           </div>
-          <button type="button" class="button-new">Save</button>
+          <button type="button" onclick="add_text()" class="button-new right">Save</button>
         </div>
       </div>
     </div>
     
+    <script src="db_interactions.js"></script>
     <script src="app.js"></script>
     <script src="aria.modal.min.js"></script>
   </body>

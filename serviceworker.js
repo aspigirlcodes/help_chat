@@ -1,11 +1,14 @@
-var CACHE_NAME = "help_chat_cache_v2"
+var CACHE_NAME = "help_chat_cache_v3"
 var immutableRequests = [
   
 ]
 var mutableRequests = [
   "index.html",
   "style.css",
-  "app.js"
+  "app.js",
+  "aria.modal.css",
+  "aria.modal.min.js",
+  "db_interactions.js"
 ]
 
 self.addEventListener("install", function(event){

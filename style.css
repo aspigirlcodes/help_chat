@@ -55,9 +55,24 @@ textarea {
 
 .button-new {
   background-color: #079b2a;
-  padding: 1rem;
-  display: block;
-  margin-left: auto;
+  padding: .5rem;
+}
+.button-default {
+  background-color: #2196F3;
+  padding: .5rem;
+}
+.button-delete {
+  background-color: #ba0505;
+  padding: .5rem;
+}
+
+hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  white-space: pre-wrap;
 }
 
 /*
@@ -235,6 +250,7 @@ DISPLAY SECTION
 
 .right {
   margin-left: auto;
+  display: block;
 }
 
 /*
