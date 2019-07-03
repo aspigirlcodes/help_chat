@@ -1,3 +1,5 @@
+var db_version = 1
+
 var openDatabase = function(){
   if (!window.indexedDB) {
     return false

@@ -21,13 +21,13 @@
       <h2 class="visuallyhidden">Main Menu</h2>
     	<ul class="navbar-nav" id="nav-menu">
         <li class="nav-item">
-          <button type="button" data-modal-open="modal_1" onclick="texts_modal()" class="open-dialog nav-link"> Intro Texts </button>
+          <button type="button" data-modal-open="modal_1" id="texts-menu" class="open-dialog nav-link"> Intro Texts </button>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Default Settings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="share_chat()">Save/Share Chat</a>
+          <a class="nav-link" href="#" id="share-menu">Save/Share Chat</a>
         </li>
       </ul>
     </nav>
@@ -36,22 +36,22 @@
       </div>
       <div id="settings">
         <div class="checkbox setting">
-          <input type="checkbox" class="checkbox-input" id="auto-switch" onchange="auto_switch_user(this.checked)">
+          <input type="checkbox" class="checkbox-input" id="auto-switch">
           <label class="checkbox-label" for="auto-switch">Auto-switch User</label>
         </div>
         <label class="switch">
-          <input id="user-switch" type="checkbox" onchange="user_changed(this.checked)">
+          <input id="user-switch" type="checkbox">
           <span class="slider"></span>
         </label>
         <div class="range setting">
           <label for="text-size">Text size</label>
-          <input type="range" class="range-input" min="0" max="4" value="1" id="text-size" oninput="change_size(this.value)">
+          <input type="range" class="range-input" min="0" max="4" value="1" id="text-size">
         </div>
       </div>
       <div id="input">
         <div contenteditable="true" id="message-input"></div>
         
-        <button type="submit" name="button" class="button-send" onclick="send()">Send</button>
+        <button type="button" class="button-send" id="send-button">Send</button>
       
       </div>
     </div>
@@ -65,7 +65,7 @@
         <div id="modal_1_content">
           <div id="text_list">
           </div>
-          <button type="button" onclick="edit_text_modal()" class="button-new right">New Intro Text</button>
+          <button type="button" id="new-text-button" class="button-new right">New Intro Text</button>
         </div>
         <div id="modal_2_content">
           
@@ -79,7 +79,7 @@
             <label for="inputText">Text</label>
             <textarea id="inputText" rows="8"></textarea>
           </div>
-          <button type="button" onclick="add_text()" class="button-new right">Save</button>
+          <button type="button" id="add-text-button" class="button-new right">Save</button>
         </div>
       </div>
     </div>

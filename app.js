@@ -1,7 +1,19 @@
-var db_version = 1
 var align_right = document.getElementById('user-switch').checked
 
 document.getElementById('message-input').focus()
+
+
+var menu_button = document.getElementById( 'menu-toggle' )
+menu_button.onclick = toggle_menu
+document.getElementById('texts-menu').onclick = texts_modal
+document.getElementById('share-menu').onclick = share_chat
+document.getElementById('send-button').onclick = send
+document.getElementById('new-text-button').onclick = edit_text_modal
+document.getElementById('add-text-button').onclick = add_text
+document.getElementById('auto-switch').onchange = auto_switch_user
+document.getElementById('user-switch').onchange = user_changed
+document.getElementById('text-size').oninput = size_changed
+
 
 if ("serviceWorker" in navigator){
   navigator.serviceWorker.register("serviceworker.js")
@@ -27,17 +39,21 @@ function texts_modal(){
             <p id="text_${text.id}">${text.text}</p>
           </div>
           <div>
-            <button type="button" class="button-new" onclick="use_text(${text.id})"> Use </button>
-            <button type="button" class="button-default" onclick="edit_text_modal(${text.id})"> Edit </button>
-            <button type="button" class="button-delete" onclick="delete_text(${text.id})"> Delete </button>
+            <button type="button" class="button-new" data-text-id="${text.id}" id="use-button-${text.id}"> Use </button>
+            <button type="button" class="button-default" data-text-id="${text.id}" id="edit-button-${text.id}"> Edit </button>
+            <button type="button" class="button-delete" data-text-id="${text.id}" id="delete-button-${text.id}"> Delete </button>
           </div>
         `
-        
         var innerdiv = document.createElement('div')
         innerdiv.id = "div_"+text.id
         innerdiv.innerHTML = innerhtml
         div.appendChild(innerdiv)
         div.appendChild(document.createElement('hr'))
+        
+        document.getElementById('use-button-' + text.id).onclick = use_text
+        document.getElementById('edit-button-' + text.id).onclick = edit_text_modal
+        document.getElementById('delete-button-' + text.id).onclick = delete_text
+        
       }
       window.ARIAmodal.resetFocusableElements('modal_1', 'modal_1_content')
     } else {
@@ -48,7 +64,9 @@ function texts_modal(){
   close_menu()
 }
 
-function edit_text_modal(id){
+function edit_text_modal(){
+  var id = this.dataset.textId
+    
   document.getElementById('modal_2_content').style.display = "block"
   document.getElementById('modal_1_content').style.display = "none"
   if (id) {
@@ -64,24 +82,20 @@ function edit_text_modal(id){
   window.ARIAmodal.resetFocusableElements('modal_1', 'modal_2_content')
 }
 
-function use_text(id){
-  text = document.getElementById('text_' + id).innerHTML
-  title = document.getElementById('title_' + id).innerHTML
-  titleElem = document.createElement('h3')
-  titleElem.innerHTML = title
+function display_text(title, text) {
+  if (title) {
+    var innerhtml = `<h3>${title}</h3>${text}`
+  } else {
+    var innerhtml = text
+  }
   var display = document.getElementById('display')
   var message_div = document.createElement('div')
-  message_div.appendChild(titleElem)
-  message_div.appendChild(document.createTextNode(text))
+  message_div.innerHTML = innerhtml
   var auto_switch = document.getElementById('auto-switch').checked
-  
-  
-  if(align_right){
-    message_div.setAttribute('class', "display-message right")
-    
-  }else{
+  if(align_right) {
+    message_div.setAttribute('class', "display-message right")  
+  } else {
     message_div.setAttribute('class', "display-message")
-    
   }
   if (auto_switch) {
     switch_user(!align_right)
@@ -89,11 +103,18 @@ function use_text(id){
   display.appendChild(message_div)
   var size = document.getElementById('text-size').value
   change_size(size)
-  
+}
+
+function use_text(){
+  var id = this.dataset.textId
+  text = document.getElementById('text_' + id).innerHTML
+  title = document.getElementById('title_' + id).innerHTML
+  display_text(title, text)  
   window.ARIAmodal.closeModal()
 }
 
-function delete_text(id) {
+function delete_text() {
+  var id = this.dataset.textId
   deleteFromObjectStore('texts', id)
   var div = document.getElementById('div_' + id)
   var hr = div.nextElementSibling
@@ -118,12 +139,6 @@ function add_text(){
   text.value = ""
   texts_modal()
 }
-
-// Set button to click.
-var menu_button = document.getElementById( 'menu-toggle' )
-
-// Click the button.
-menu_button.onclick = toggle_menu
 
 function toggle_menu() {
   // Toggle class "opened". Set also aria-expanded to true or false.
@@ -175,7 +190,6 @@ function share_chat(){
     .then(() => console.log('Successful share'))
     .catch((error) => console.log('Error sharing', error))
   } else {
-    console.log(text)
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', "Helpchat_" + dateString + ".txt");
@@ -190,7 +204,11 @@ function share_chat(){
   
 }
 
-
+function size_changed(){
+  var value = this.value
+  change_size(value)
+  document.getElementById('message-input').scrollIntoView(false)
+}
 
 function change_size(value){
   if (value == 0) {
@@ -200,11 +218,11 @@ function change_size(value){
   for (var message of messages){
     message.style['font-size'] = value + "rem"
   }
-  document.getElementById('message-input').scrollIntoView(false)
 }
 
 // change from dom to variable
-function user_changed(checked){
+function user_changed(){
+  var checked = this.checked
   align_right = checked
   document.getElementById('message-input').focus()
 }
@@ -215,7 +233,8 @@ function switch_user(right){
   document.getElementById('user-switch').checked = align_right
 } 
 
-function auto_switch_user(checked){
+function auto_switch_user(){
+  var checked = this.checked
   if (checked) {
     var messages = document.getElementsByClassName("display-message")
     if (messages){
@@ -230,28 +249,9 @@ function auto_switch_user(checked){
 }
   
 function send(){
-  var display = document.getElementById('display');
   var textarea = document.getElementById('message-input')
-  var message_text = textarea.innerText
-  var message_div = document.createElement('div')
-  message_div.appendChild(document.createTextNode(message_text))
+  var text = textarea.innerText
+  display_text(null, text)
   textarea.innerHTML = ""
-  var auto_switch = document.getElementById('auto-switch').checked
-  
-  
-  if(align_right){
-    message_div.setAttribute('class', "display-message right")
-    
-  }else{
-    message_div.setAttribute('class', "display-message")
-    
-  }
-  if (auto_switch) {
-    switch_user(!align_right)
-  }
-  display.appendChild(message_div)
-  var size = document.getElementById('text-size').value
-  change_size(size)
-  textarea.value = ""
   textarea.focus()
 }
